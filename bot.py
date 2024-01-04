@@ -89,3 +89,13 @@ async def playerstats(ctx, *args):
     await ctx.send(embed=embed)
 
 bot.run(BOT_TOKEN)
+
+
+
+# nlahsdfosndofnsif
+# sortedsdf
+# sd
+# fsd
+# fsd
+# fs
+# d
