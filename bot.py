@@ -8,6 +8,7 @@ import discord
 from discord.ext import commands
 from scripts.daily_script import fetch_player_game_logs, group_players_by_matchup, build_table
 from scripts.player_averages_scripts import fetch_player_averages
+from scripts.player_lookup_script import lookup_player, create_player_table
 
 FILE_PATH = 'creds.json'  # Replace with your actual file path
 
@@ -107,4 +108,24 @@ async def playerstats(ctx, *args):
     # print(f"Player Averages for {player_name}:", player_averages)
     await ctx.send(embed=embed)
 
+@bot.command()
+async def playerlookup(ctx, *args):
+    ''' Takes a player name and returns that player's current season details such as the player's first name, last name, team, and position '''
+
+    player_name = ' '.join([word.capitalize() for word in args])  # Combine to one string
+
+    # Perform player lookup
+    matching_players = lookup_player(player_name)
+
+    # Display the results in a table
+    if not matching_players.empty:
+        player_table = create_player_table(matching_players)
+        await ctx.send(table2ascii(player_table, style=PresetStyle.grid))
+    else:
+        await ctx.send(f"No matching players found for '{player_name}'.")
+
+
 bot.run(BOT_TOKEN)
+
+
+
